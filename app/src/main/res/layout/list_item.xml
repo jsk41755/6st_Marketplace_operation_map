@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp">
+
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="건물 번호 : "
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/tv_stname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="상호 : "
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/tv_adress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="주소 : "
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/tv_floor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="층수 : "
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/tv_store"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="업종 : "
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
+</LinearLayout>
