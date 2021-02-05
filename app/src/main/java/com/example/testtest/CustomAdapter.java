@@ -1,15 +1,20 @@
 package com.example.testtest;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +24,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     private ArrayList<User>arrayList;
     private Context context;
 
-    private ArrayList<User> ListFull;
+    private ArrayList<User> ListFull; //필터
     //private List<ExampleItem> exampleList; //필터
-    private List<ExampleItem> exampleListFull; //필터
+    //private List<ExampleItem> exampleListFull; //필터
 
     public CustomAdapter(ArrayList<User> arrayList, Context context) {
         this.arrayList = arrayList;
@@ -45,6 +50,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         holder.tv_store.setText(arrayList.get(position).getStore());
     }
 
+
+
     @Override
     public int getItemCount() {
         return (arrayList != null ? arrayList.size() : 0);
@@ -58,13 +65,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         TextView tv_store; //업종
 
 
-        public CustomViewHolder(@NonNull View itemView) {
+        public CustomViewHolder(View itemView) {
             super(itemView);
             this.tv_id = itemView.findViewById(R.id.tv_id);
             this.tv_stname = itemView.findViewById(R.id.tv_stname);
             this.tv_adress= itemView.findViewById(R.id.tv_adress);
             this.tv_floor = itemView.findViewById(R.id.tv_floor);
             this.tv_store = itemView.findViewById(R.id.tv_store);
+
         }
     }
 

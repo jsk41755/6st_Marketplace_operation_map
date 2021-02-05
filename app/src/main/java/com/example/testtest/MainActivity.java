@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.SearchView;
 
 import android.view.Menu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -21,10 +23,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.testtest.databinding.ActivityMainBinding;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public Button btn_Zone1;
     public Button btn_Zone2;
 
-    public EditText mSearchFild; //검색창
+    public EditText mSearchField; //검색창
     public ImageButton mSearchBtn; //검색버튼
 
     private RecyclerView recyclerView;
@@ -44,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
+
     //private List<ExampleItem> exampleList;
     //private List<ExampleItem> exampleListFull;
 
-    //private mBinding : ActivityMainBinding? = null; 잘 못 적음
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +60,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);// id 연결
+        mSearchField = (EditText) findViewById(R.id.search_field); //검색창 연결
+        mSearchBtn = (ImageButton) findViewById(R.id.search_btn); //검색 버튼 연결
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);//리싸이클러뷰 연결
         recyclerView.setHasFixedSize(true);// 리사이클러뷰 성능 강화
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        //List<User> arrayList = new ArrayList<User>();
+        mSearchBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                String searchText = mSearchField.getText().toString();
+
+                firebaseUserSearch(searchText);
+            }
+        });
+
         arrayList = new ArrayList<>();// User 객체를 담을 어레이 리스트(어댑터쪽으로)
 
 
@@ -90,33 +108,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CustomAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
 
-        //필터
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.example_menu, menu);
-
-            MenuItem searchItem = menu.findItem(R.id.action_search);
-            SearchView searchView = (SearchView) searchItem.getActionView();
-
-            searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    adapter.getFilter().filter(newText);
-                    return false;
-                }
-            });
-            return true;
-        }
-        //필터 끝
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
@@ -136,6 +127,26 @@ public class MainActivity extends AppCompatActivity {
                 Zone2();
             }
         });
+    }
+
+
+    private void firebaseUserSearch(String searchText) {
+
+        Toast.makeText(MainActivity.this, "Started Search", Toast.LENGTH_LONG).show();
+
+        Query firebaseSearchQuery = databaseReference.orderByChild("stname").startAt(searchText).endAt(searchText + "\uf8ff");
+
+        FirebaseRecyclerAdapter<User, CustomAdapter.CustomViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<User, CustomAdapter.CustomViewHolder>  (
+                User.class,
+                R.layout.list_item,
+                CustomAdapter.CustomViewHolder.class,
+                firebaseSearchQuery
+        ) {
+            @Override
+            protected void onBindViewHolder(@NonNull CustomAdapter.CustomViewHolder viewHolder, int position, @NonNull User model) {
+                viewHolder.CustomViewHolder(getApplicationContext(), model.getId(), model.getStname(), model.getAdress(), model.getFloor(), model.getStore());
+            }
+        };
     }
 
     public void Zone1() {

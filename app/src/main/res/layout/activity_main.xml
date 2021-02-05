@@ -34,7 +34,7 @@
 
 
         <ImageButton
-            android:id="@+id/imageButton5"
+            android:id="@+id/search_btn"
             android:layout_width="54dp"
             android:layout_height="53dp"
             android:layout_alignBottom="@+id/search_field"
