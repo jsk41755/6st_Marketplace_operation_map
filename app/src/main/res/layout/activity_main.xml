@@ -31,6 +31,8 @@
             android:hint="가게명을 입력하시오."
             android:inputType="textPersonName" />
 
+
+
         <ImageButton
             android:id="@+id/imageButton5"
             android:layout_width="54dp"
