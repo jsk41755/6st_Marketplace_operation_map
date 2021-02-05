@@ -3,8 +3,16 @@ package com.example.testtest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.SearchView;
+
+import android.view.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -26,12 +34,18 @@ public class MainActivity extends AppCompatActivity {
     public Button btn_Zone1;
     public Button btn_Zone2;
 
+    public EditText mSearchFild; //검색창
+    public ImageButton mSearchBtn; //검색버튼
+
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<User> arrayList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+
+    //private List<ExampleItem> exampleList;
+    //private List<ExampleItem> exampleListFull;
 
     //private mBinding : ActivityMainBinding? = null; 잘 못 적음
 
@@ -75,6 +89,33 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new CustomAdapter(arrayList, this);
         recyclerView.setAdapter(adapter);
+
+        //필터
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.example_menu, menu);
+
+            MenuItem searchItem = menu.findItem(R.id.action_search);
+            SearchView searchView = (SearchView) searchItem.getActionView();
+
+            searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    adapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+            return true;
+        }
+        //필터 끝
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
