@@ -48,10 +48,5 @@
 
     </LinearLayout>
 
-    <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_search"
-        android:title="Search"
-        app:showAsAction="ifRoom|collapseActionView" />
 
 </LinearLayout>

@@ -23,31 +23,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp">
-        <EditText
-            android:id="@+id/search_field"
-            android:layout_width="328dp"
-            android:layout_height="64dp"
-            android:layout_alignParentTop="true"
-            android:hint="가게명을 입력하시오."
-            android:inputType="textPersonName" />
 
-
-
-        <ImageButton
-            android:id="@+id/search_btn"
-            android:layout_width="54dp"
-            android:layout_height="53dp"
-            android:layout_alignBottom="@+id/search_field"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="29dp"
-            android:layout_marginLeft="29dp"
-            android:layout_marginBottom="11dp"
-            android:layout_toEndOf="@+id/search_field"
-            android:layout_toRightOf="@+id/search_field"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/search" />
+        <item
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:icon="@drawable/ic_baseline_search_24"
+            android:title="Search Data"
+            app:showAsAction="always" />
     </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView

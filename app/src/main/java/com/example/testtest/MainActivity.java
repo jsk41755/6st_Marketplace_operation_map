@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.testtest.databinding.ActivityMainBinding;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,11 +39,12 @@ public class MainActivity extends AppCompatActivity {
     public Button btn_Zone1;
     public Button btn_Zone2;
 
+    RecyclerView recview;
+    CustomAdapter adapter;
+
     public EditText mSearchField; //검색창
     public ImageButton mSearchBtn; //검색버튼
 
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<User> arrayList;
     private FirebaseDatabase database;
@@ -59,95 +61,69 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("");
 
-        mSearchField = (EditText) findViewById(R.id.search_field); //검색창 연결
-        mSearchBtn = (ImageButton) findViewById(R.id.search_btn); //검색 버튼 연결
+        recview=(RecyclerView)findViewById(R.id.recyclerView);
+        recview.setLayoutManager(new LinearLayoutManager(this));
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseRecyclerOptions<User> options =
+                new FirebaseRecyclerOptions.Builder<User>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("User"), User.class)
+                        .build();
 
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);//리싸이클러뷰 연결
-        recyclerView.setHasFixedSize(true);// 리사이클러뷰 성능 강화
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        mSearchBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                String searchText = mSearchField.getText().toString();
-
-                firebaseUserSearch(searchText);
-            }
-        });
-
-        arrayList = new ArrayList<>();// User 객체를 담을 어레이 리스트(어댑터쪽으로)
-
-
-        database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
-
-        databaseReference = database.getReference("User"); // DB 테이블 연결
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //파이어베이스 데이터베이스의 데이터를 받아오는 곳
-                arrayList.clear();// 기존 배열리스트가 존재하지않게 초기화
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //반복문으로 데이터 List를 추출해냄
-                    User user = snapshot.getValue(User.class); // 만들어왔던 User 객체에 데이터를 담는다.
-                    arrayList.add(user); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰를 보낼 준비
-                }
-                adapter.notifyDataSetChanged();//리스트 저장 및 새로고침
+        adapter=new CustomAdapter(options);
+        recview.setAdapter(adapter);
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //디비를 가져오던중 에러 발생 시
-                Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
-            }
-        });
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 
-        adapter = new CustomAdapter(arrayList, this);
-        recyclerView.setAdapter(adapter);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
-        btn_Zone1 = (Button) findViewById(R.id.btn_Zone1);
-        btn_Zone1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Zone1();
-            }
-        });
-
-
-        btn_Zone2 = (Button) findViewById(R.id.btn_Zone2);
-        btn_Zone2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Zone2();
-            }
-        });
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
 
-    private void firebaseUserSearch(String searchText) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.example_menu, menu);
 
-        Toast.makeText(MainActivity.this, "Started Search", Toast.LENGTH_LONG).show();
+        MenuItem item = menu.findItem(R.id.search);
 
-        Query firebaseSearchQuery = databaseReference.orderByChild("stname").startAt(searchText).endAt(searchText + "\uf8ff");
+        SearchView searchView = (SearchView) item.getActionView();
 
-        FirebaseRecyclerAdapter<User, CustomAdapter.CustomViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<User, CustomAdapter.CustomViewHolder>  (
-                User.class,
-                R.layout.list_item,
-                CustomAdapter.CustomViewHolder.class,
-                firebaseSearchQuery
-        ) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            protected void onBindViewHolder(@NonNull CustomAdapter.CustomViewHolder viewHolder, int position, @NonNull User model) {
-                viewHolder.CustomViewHolder(getApplicationContext(), model.getId(), model.getStname(), model.getAdress(), model.getFloor(), model.getStore());
+            public boolean onQueryTextSubmit(String s) {
+                processsearch(s);
+                return false;
             }
-        };
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                processsearch(s);
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
+        private void processsearch(String s)
+        {
+            FirebaseRecyclerOptions<User> options =
+                    new FirebaseRecyclerOptions.Builder<User>()
+                            .setQuery(FirebaseDatabase.getInstance().getReference().child("User").orderByChild("stname").startAt(s).endAt(s+"\uf8ff"), User.class)
+                            .build();
+
+            adapter=new CustomAdapter(options);
+            adapter.startListening();
+            recview.setAdapter(adapter);
+
+        }
 
     public void Zone1() {
         Intent intent = new Intent(this, Zone1.class);
