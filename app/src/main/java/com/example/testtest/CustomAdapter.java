@@ -10,6 +10,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +37,13 @@ public class CustomAdapter extends FirebaseRecyclerAdapter<User,CustomAdapter.my
         holder.floor.setText(model.getStname());
         holder.stname.setText(model.getAdress());
         holder.store.setText(model.getFloor());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(context, myMovieDataList.getMovieName(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

@@ -70,13 +70,14 @@ public class MainActivity extends AppCompatActivity {
         setTitle("건물명을 입력하시오.");
 
         actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFED3B00")));
-        if(Build.VERSION.SDK_INT>=21){
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFED3B00")));      //액션바 색상
+
+        if(Build.VERSION.SDK_INT>=21){                                                                     //상태바 색상
             window=this.getWindow();
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
         }
 
-        recview=(RecyclerView)findViewById(R.id.recyclerView);
+        recview=(RecyclerView)findViewById(R.id.recyclerView);                                            //DB 리싸이클러뷰
         recview.setLayoutManager(new LinearLayoutManager(this));
 
         FirebaseRecyclerOptions<User> options =
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {                                                 //검색옵션 기능
         getMenuInflater().inflate(R.menu.example_menu, menu);
 
         MenuItem item = menu.findItem(R.id.search);
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-        private void processsearch(String s)
+        private void processsearch(String s)                                                        //검색 기능 구현
         {
             FirebaseRecyclerOptions<User> options =
                     new FirebaseRecyclerOptions.Builder<User>()
