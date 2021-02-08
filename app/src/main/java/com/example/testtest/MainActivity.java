@@ -1,12 +1,16 @@
 package com.example.testtest;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     public Button btn_Zone1;
     public Button btn_Zone2;
 
+    ActionBar actionBar;
+
     RecyclerView recview;
     CustomAdapter adapter;
 
@@ -57,11 +63,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        Window window;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("");
+        setTitle("건물명을 입력하시오.");
+
+        actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFED3B00")));
+        if(Build.VERSION.SDK_INT>=21){
+            window=this.getWindow();
+            window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
+        }
 
         recview=(RecyclerView)findViewById(R.id.recyclerView);
         recview.setLayoutManager(new LinearLayoutManager(this));
