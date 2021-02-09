@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
+    ItemTouchHelper helper;
 
     //private List<ExampleItem> exampleList;
     //private List<ExampleItem> exampleListFull;
@@ -80,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         recview=(RecyclerView)findViewById(R.id.recyclerView);                                            //DB 리싸이클러뷰
         recview.setLayoutManager(new LinearLayoutManager(this));
 
+
+
+
         FirebaseRecyclerOptions<User> options =                                                     //검색 알고리즘_1
                 new FirebaseRecyclerOptions.Builder<User>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("User"), User.class)
@@ -87,7 +92,11 @@ public class MainActivity extends AppCompatActivity {
 
         adapter=new CustomAdapter(options);
         recview.setAdapter(adapter);
-            }
+
+        helper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
+        helper.attachToRecyclerView(recview);                                                    //recyclerview에  itemtouchhelper 붙임
+
+    }
 
     @Override
     protected void onStart() {
@@ -100,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
 
 
     @Override

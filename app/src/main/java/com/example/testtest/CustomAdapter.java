@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends FirebaseRecyclerAdapter<User,CustomAdapter.myviewholder>
+        implements ItemTouchHelperListener  //만들어낸 인터페이스를 추가했음
 {
     public CustomAdapter(@NonNull FirebaseRecyclerOptions<User> options) {
         super(options);
@@ -53,6 +54,26 @@ public class CustomAdapter extends FirebaseRecyclerAdapter<User,CustomAdapter.my
     {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
         return new myviewholder(view);
+    }
+
+    @Override
+    public boolean onItemMove(int from_position, int to_position) {
+        //이동할 객체 저장//
+      //  User user  = .get(from_position);
+        // 이동할 객체 삭제
+     //   items.remove(from_position);
+        // 이동하고 싶은 position에 추가
+     //   items.add(to_position,person);
+        // Adapter에 데이터 이동알림
+      //  notifyItemMoved(from_position,to_position);
+        return true;
+    }
+
+    @Override
+
+    public void onItemSwipe(int position) {
+
+        notifyItemRemoved(position);
     }
 
 
