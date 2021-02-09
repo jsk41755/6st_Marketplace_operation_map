@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
         setTitle("건물명을 입력하시오.");
 
         actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFED3B00")));      //액션바 색상
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFA4614")));      //액션바 색상
 
         if(Build.VERSION.SDK_INT>=21){                                                                     //상태바 색상
             window=this.getWindow();
-            window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
+            window.setStatusBarColor(this.getResources().getColor(R.color.firefighter_color));
         }
 
         recview=(RecyclerView)findViewById(R.id.recyclerView);                                            //DB 리싸이클러뷰
