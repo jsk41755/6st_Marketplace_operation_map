@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         recview=(RecyclerView)findViewById(R.id.recyclerView);                                            //DB 리싸이클러뷰
         recview.setLayoutManager(new LinearLayoutManager(this));
 
-        FirebaseRecyclerOptions<User> options =
+        FirebaseRecyclerOptions<User> options =                                                     //검색 알고리즘_1
                 new FirebaseRecyclerOptions.Builder<User>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("User"), User.class)
                         .build();
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {                                                 //검색옵션 기능
+    public boolean onCreateOptionsMenu(Menu menu) {                                                 ////검색 알고리즘_2
         getMenuInflater().inflate(R.menu.example_menu, menu);
 
         MenuItem item = menu.findItem(R.id.search);
@@ -126,11 +126,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-        private void processsearch(String s)                                                        //검색 기능 구현
+        private void processsearch(String s)                                                        //검색 알고리즘_3
         {
             FirebaseRecyclerOptions<User> options =
                     new FirebaseRecyclerOptions.Builder<User>()
-                            .setQuery(FirebaseDatabase.getInstance().getReference().child("User").orderByChild("stname").startAt(s).endAt(s+"\uf8ff"), User.class)
+                            .setQuery(FirebaseDatabase.getInstance().getReference().child("User").orderByChild("st_name").startAt(s).endAt(s+"\uf8ff"), User.class)
                             .build();
 
             adapter=new CustomAdapter(options);

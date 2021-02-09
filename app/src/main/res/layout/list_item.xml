@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         app:cardElevation="10dp"
@@ -27,14 +27,14 @@
             android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/tv_stname"
+            android:id="@+id/tv_st_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="상호 : "
             android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/tv_adress"
+            android:id="@+id/tv_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="주소 : "
@@ -48,7 +48,7 @@
             android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/tv_store"
+            android:id="@+id/tv_st_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="업종 : "

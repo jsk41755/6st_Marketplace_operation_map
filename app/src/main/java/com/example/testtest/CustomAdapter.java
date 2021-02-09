@@ -31,17 +31,17 @@ public class CustomAdapter extends FirebaseRecyclerAdapter<User,CustomAdapter.my
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull User model) {
+    protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull User model) {  //User 클래스 파일과 연결시켜주는 함수
         holder.id.setText(model.getId());
-        holder.adress.setText(model.getStore());
-        holder.floor.setText(model.getStname());
-        holder.stname.setText(model.getAdress());
-        holder.store.setText(model.getFloor());
+        holder.address.setText(model.getAddress());
+        holder.floor.setText(model.getFloor());
+        holder.st_name.setText(model.getSt_name());
+        holder.st_type.setText(model.getSt_type());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {         //카드뷰 눌렀을 때, 우선 로그캣으로 확인 가능.
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context, myMovieDataList.getMovieName(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, myMovieDataList.getSt_name(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -56,18 +56,18 @@ public class CustomAdapter extends FirebaseRecyclerAdapter<User,CustomAdapter.my
     }
 
 
-    class myviewholder extends RecyclerView.ViewHolder
+    class myviewholder extends RecyclerView.ViewHolder    //list_item.xml과 연동시켜주는 함수
     {
         //CircleImageView img;
-        TextView id,adress,floor,stname,store;
+        TextView id,address,floor,st_name,st_type;
         public myviewholder(@NonNull View itemView)
         {
             super(itemView);
             id=(TextView)itemView.findViewById(R.id.tv_id);
-            adress=(TextView)itemView.findViewById(R.id.tv_adress);
+            address=(TextView)itemView.findViewById(R.id.tv_address);
             floor=(TextView)itemView.findViewById(R.id.tv_floor);
-            stname=(TextView)itemView.findViewById(R.id.tv_stname);
-            store=(TextView)itemView.findViewById(R.id.tv_store);
+            st_name=(TextView)itemView.findViewById(R.id.tv_st_name);
+            st_type=(TextView)itemView.findViewById(R.id.tv_st_type);
         }
     }
 }
