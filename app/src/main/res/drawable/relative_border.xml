@@ -2,15 +2,10 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="#FFFFFF"/>
     <stroke android:width="2dp" android:color="#B1BCBE" />
-    <corners android:topLeftRadius="5dp"
-<<<<<<< HEAD
-        android:topRightRadius="5dp"/>
-=======
-             android:topRightRadius="5dp"/>
->>>>>>> origin/master
+
     <padding
         android:left="5dp"
-        android:top="10dp"
+        android:top="2dp"
         android:right="5dp"
-        android:bottom="0dp" />
+        android:bottom="2dp" />
 </shape>

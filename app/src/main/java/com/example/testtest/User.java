@@ -2,10 +2,10 @@ package com.example.testtest;
 
 public class User {
     private String id;
-    private String st_name;
-    private String address;
+    private String stname;
+    private String adress;
     private String floor;
-    private String st_type;
+    private String store;
 
     public User(){}
 
@@ -17,20 +17,20 @@ public class User {
         this.id = id;
     }
 
-    public String getSt_name() {
-        return st_name;
+    public String getStname() {
+        return stname;
     }
 
-    public void setSt_name(String stname) {
-        this.st_name = stname;
+    public void setStname(String stname) {
+        this.stname = stname;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAdress() {
+        return adress;
     }
 
-    public void setAddress(String adress) {
-        this.address = adress;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public String getFloor() {
@@ -41,11 +41,11 @@ public class User {
         this.floor = floor;
     }
 
-    public String getSt_type() {
-        return st_type;
+    public String getStore() {
+        return store;
     }
 
-    public void setSt_type(String store) {
-        this.st_type = store;
+    public void setStore(String store) {
+        this.store = store;
     }
 }
