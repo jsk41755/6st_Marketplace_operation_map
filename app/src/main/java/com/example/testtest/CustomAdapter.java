@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends FirebaseRecyclerAdapter<User, CustomAdapter.myviewholder>
-        implements ItemTouchHelperListener  //만들어낸 인터페이스를 추가했음
 {
     public CustomAdapter(@NonNull FirebaseRecyclerOptions<User> options) {
         super(options);
@@ -70,26 +69,7 @@ public class CustomAdapter extends FirebaseRecyclerAdapter<User, CustomAdapter.m
         return new myviewholder(view);
     }
 
-    @Override
-    public boolean onItemMove(int from_position, int to_position) {
-        //이동할 객체 저장//
-        //  User user  = .get(from_position);
-        // 이동할 객체 삭제
-        //   items.remove(from_position);
-        // 이동하고 싶은 position에 추가
-        //   items.add(to_position,person);
-        // Adapter에 데이터 이동알림
-        //  notifyItemMoved(from_position,to_position);
-        return true;
-    }
-
-    @Override
-
-    public void onItemSwipe(int position) {
-
-        notifyItemRemoved(position);
-    }
-
+    
     public void setOnItemclicklistener(OnPersonItemClickListener listener) {
         this.mlistener = listener;
     }
@@ -111,7 +91,7 @@ public class CustomAdapter extends FirebaseRecyclerAdapter<User, CustomAdapter.m
                 @Override
                 public void onClick(View view) {                    //main 액티비티에 클릭 리스너를 하기 위해 여기에 선언. 이유는 토스트는
                     int position = getAdapterPosition();            //context가 필요하기도 하고, 작업하기도 편해질 듯 해서
-                    if (position != RecyclerView.NO_POSITION) {
+                    if (position != RecyclerView.NO_POSITION ) {
                         mlistener.onItemClick(view, position);
 
                     }

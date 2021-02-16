@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
-    ItemTouchHelper helper;
+    //ItemTouchHelper helper;
 
     //private List<ExampleItem> exampleList;
     //private List<ExampleItem> exampleListFull;
@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CustomAdapter(options);
         recview.setAdapter(adapter);
 
-        helper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
-        helper.attachToRecyclerView(recview);                                                    //recyclerview에  itemtouchhelper 붙임
+    //    helper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
+    //    helper.attachToRecyclerView(recview);                                                    //recyclerview에  itemtouchhelper 붙임 스와이프
 
         imageview2.setOnTouchListener(new View.OnTouchListener() {                  //지도 터치로 이동시키기. 아직 완성 x
             @Override
@@ -199,6 +199,13 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CustomAdapter(options);
         adapter.startListening();
         recview.setAdapter(adapter);
+        adapter.setOnItemclicklistener(new CustomAdapter.OnPersonItemClickListener() {    //카드뷰 클릭 시 작동.
+            @Override
+            public void onItemClick(View view, int position) {
+                User user = adapter.getItem(position);
+                Toast.makeText(getApplicationContext(), user.getId()+"가 선택됨", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
