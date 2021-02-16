@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
 
 import android.view.Menu;
@@ -48,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageview2;           //지도 아이디 값 저장
     ActionBar actionBar;
 
+    private RadioGroup rg;
+    private RadioButton rb_stname, rb_address;
+    private String str_result;
+
     RecyclerView recview;
     CustomAdapter adapter;
 
@@ -74,18 +80,42 @@ public class MainActivity extends AppCompatActivity {
         setTitle("건물명을 입력하시오.");
 
         actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFED3B00")));      //액션바 색상
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFA4614")));      //액션바 색상
 
-        if(Build.VERSION.SDK_INT>=21){                                                                     //상태바 색상
-            window=this.getWindow();
-            window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
+        //ActionBar actionBar = getSupportActionBar();
+        // actionBar.hide();
+        str_result = getString(R.string.st_name);
+
+        rg = findViewById(R.id.rg);
+        rb_stname = findViewById(R.id.rb_stname);
+        rb_address = findViewById(R.id.rb_address);
+
+        rb_stname.setChecked(true);
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() { //라디오의 상태 값의 변경됨을 감지.
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if(checkedId == R.id.rb_stname){
+                    Toast.makeText(MainActivity.this,"남자 라디오 버튼",Toast.LENGTH_SHORT).show();
+                    str_result = getString(R.string.st_name);
+                } else if(checkedId == R.id.rb_address){
+                    Toast.makeText(MainActivity.this,"여자 라디오 버튼",Toast.LENGTH_SHORT).show();
+                    str_result = getString(R.string.address);
+                }
+            }
+        });
+
+        if (Build.VERSION.SDK_INT >= 21) {                                                                     //상태바 색상
+            window = this.getWindow();
+            window.setStatusBarColor(this.getResources().getColor(R.color.firefighter_color));
         }
 
         recview = (RecyclerView) findViewById(R.id.recyclerView);                                            //DB 리싸이클러뷰
         recview.setLayoutManager(new LinearLayoutManager(this));
         imageview2 = (ImageView) findViewById(R.id.imageView2);
 
-        FirebaseRecyclerOptions<User> options =
+        FirebaseRecyclerOptions<User> options =                                                     //검색 알고리즘_1
                 new FirebaseRecyclerOptions.Builder<User>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("User"), User.class)
                         .build();
@@ -93,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CustomAdapter(options);
         recview.setAdapter(adapter);
 
-    //    helper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
-    //    helper.attachToRecyclerView(recview);                                                    //recyclerview에  itemtouchhelper 붙임 스와이프
+        //    helper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
+        //    helper.attachToRecyclerView(recview);                                                    //recyclerview에  itemtouchhelper 붙임 스와이프
 
         imageview2.setOnTouchListener(new View.OnTouchListener() {                  //지도 터치로 이동시키기. 아직 완성 x
             @Override
@@ -135,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 return true;
-    }
+            }
         });
 
         adapter.setOnItemclicklistener(new CustomAdapter.OnPersonItemClickListener() {    //카드뷰 클릭 시 작동.
@@ -164,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {                                                 //검색옵션 기능
+    public boolean onCreateOptionsMenu(Menu menu) {                                                 ////검색 알고리즘_2
         getMenuInflater().inflate(R.menu.example_menu, menu);
 
         MenuItem item = menu.findItem(R.id.search);
@@ -205,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+        }
 
     public void Zone1() {
         Intent intent = new Intent(this, Zone1.class);
