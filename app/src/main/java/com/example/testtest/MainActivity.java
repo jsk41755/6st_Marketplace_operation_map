@@ -96,11 +96,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                if(checkedId == R.id.rb_stname){
-                    Toast.makeText(MainActivity.this,"남자 라디오 버튼",Toast.LENGTH_SHORT).show();
+                if (checkedId == R.id.rb_stname) {
+                    Toast.makeText(MainActivity.this, "남자 라디오 버튼", Toast.LENGTH_SHORT).show();
                     str_result = getString(R.string.st_name);
-                } else if(checkedId == R.id.rb_address){
-                    Toast.makeText(MainActivity.this,"여자 라디오 버튼",Toast.LENGTH_SHORT).show();
+                } else if (checkedId == R.id.rb_address) {
+                    Toast.makeText(MainActivity.this, "여자 라디오 버튼", Toast.LENGTH_SHORT).show();
                     str_result = getString(R.string.address);
                 }
             }
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 User user = adapter.getItem(position);
-                Toast.makeText(getApplicationContext(), user.getId()+"가 선택됨", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), user.getId() + "가 선택됨", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -217,12 +217,13 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
-        private void processsearch(String s)                                                        //검색 기능 구현
-        {
-            FirebaseRecyclerOptions<User> options =
-                    new FirebaseRecyclerOptions.Builder<User>()
-                            .setQuery(FirebaseDatabase.getInstance().getReference().child("User").orderByChild("stname").startAt(s).endAt(s+"\uf8ff"), User.class)
-                            .build();
+
+    private void processsearch(String s)                                                        //검색 기능 구현
+    {
+        FirebaseRecyclerOptions<User> options =
+                new FirebaseRecyclerOptions.Builder<User>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("User").orderByChild(str_result).startAt(s).endAt(s + "\uf8ff"), User.class)
+                        .build();
 
         adapter = new CustomAdapter(options);
         adapter.startListening();
@@ -231,11 +232,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 User user = adapter.getItem(position);
-                Toast.makeText(getApplicationContext(), user.getId()+"가 선택됨", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), user.getId() + "가 선택됨", Toast.LENGTH_SHORT).show();
             }
         });
 
-        }
+    }
 
     public void Zone1() {
         Intent intent = new Intent(this, Zone1.class);
