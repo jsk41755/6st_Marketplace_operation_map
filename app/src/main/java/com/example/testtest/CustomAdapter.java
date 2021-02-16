@@ -31,8 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomAdapter extends FirebaseRecyclerAdapter<User, CustomAdapter.myviewholder>
-{
+public class CustomAdapter extends FirebaseRecyclerAdapter<User, CustomAdapter.myviewholder> {
     public CustomAdapter(@NonNull FirebaseRecyclerOptions<User> options) {
         super(options);
     }
@@ -47,17 +46,17 @@ public class CustomAdapter extends FirebaseRecyclerAdapter<User, CustomAdapter.m
     @Override
     protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull User model) {  //User 클래스 파일과 연결시켜주는 함수
         holder.id.setText(model.getId());
-        holder.address.setText(model.getAddress());
-        holder.floor.setText(model.getFloor());
-        holder.st_name.setText(model.getSt_name());
-        holder.st_type.setText(model.getSt_type());
+        holder.adress.setText(model.getStore());
+        holder.floor.setText(model.getStname());
+        holder.stname.setText(model.getAdress());
+        holder.store.setText(model.getFloor());
 
-       // holder.itemView.setOnClickListener(new View.OnClickListener() {  //카드뷰 눌렀을 때, 우선 로그캣으로 확인 가능.
-      //      @Override
-       //     public void onClick(View v) {
-                //Toast.makeText(context, myMovieDataList.getSt_name(), Toast.LENGTH_SHORT).show();
-     //       }
-     //   });
+        // holder.itemView.setOnClickListener(new View.OnClickListener() {  //카드뷰 눌렀을 때, 우선 로그캣으로 확인 가능.
+        //      @Override
+        //     public void onClick(View v) {
+        //Toast.makeText(context, myMovieDataList.getSt_name(), Toast.LENGTH_SHORT).show();
+        //       }
+        //   });
 
     }
 
@@ -69,29 +68,29 @@ public class CustomAdapter extends FirebaseRecyclerAdapter<User, CustomAdapter.m
         return new myviewholder(view);
     }
 
-    
+
     public void setOnItemclicklistener(OnPersonItemClickListener listener) {
         this.mlistener = listener;
     }
 
 
-    class myviewholder extends RecyclerView.ViewHolder    //list_item.xml과 연동시켜주는 함수
-    {
+    //list_item.xml과 연동시켜주는 함수
+    class myviewholder extends RecyclerView.ViewHolder {
         //CircleImageView img;
-        TextView id, address, floor, st_name, st_type;
+        TextView id, adress, floor, stname, store;
 
         public myviewholder(@NonNull View itemView) {
             super(itemView);
             id = (TextView) itemView.findViewById(R.id.tv_id);
-            address = (TextView) itemView.findViewById(R.id.tv_address);
+            adress = (TextView) itemView.findViewById(R.id.tv_adress);
             floor = (TextView) itemView.findViewById(R.id.tv_floor);
-            st_name = (TextView) itemView.findViewById(R.id.tv_st_name);
-            st_type = (TextView) itemView.findViewById(R.id.tv_st_type);
+            stname = (TextView) itemView.findViewById(R.id.tv_stname);
+            store = (TextView) itemView.findViewById(R.id.tv_store);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {                    //main 액티비티에 클릭 리스너를 하기 위해 여기에 선언. 이유는 토스트는
                     int position = getAdapterPosition();            //context가 필요하기도 하고, 작업하기도 편해질 듯 해서
-                    if (position != RecyclerView.NO_POSITION ) {
+                    if (position != RecyclerView.NO_POSITION) {
                         mlistener.onItemClick(view, position);
 
                     }
@@ -100,13 +99,8 @@ public class CustomAdapter extends FirebaseRecyclerAdapter<User, CustomAdapter.m
                 }
             });
 
-
         }
-
-
     }
-
-
 }
 
 

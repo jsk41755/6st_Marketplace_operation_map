@@ -1,11 +1,11 @@
 package com.example.testtest;
 
 public class User {
-    private String id;  //건물 번호
-    private String st_name; //상호명
-    private String address; //주소
-    private String floor; //층수
-    private String st_type; //업종
+    private String id;
+    private String stname;
+    private String adress;
+    private String floor;
+    private String store;
 
     public User(){}
 
@@ -17,20 +17,20 @@ public class User {
         this.id = id;
     }
 
-    public String getSt_name() {
-        return st_name;
+    public String getStname() {
+        return stname;
     }
 
-    public void setSt_name(String st_name) {
-        this.st_name = st_name;
+    public void setStname(String stname) {
+        this.stname = stname;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAdress() {
+        return adress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public String getFloor() {
@@ -41,11 +41,11 @@ public class User {
         this.floor = floor;
     }
 
-    public String getSt_type() {
-        return st_type;
+    public String getStore() {
+        return store;
     }
 
-    public void setSt_type(String st_type) {
-        this.st_type = st_type;
+    public void setStore(String store) {
+        this.store = store;
     }
 }

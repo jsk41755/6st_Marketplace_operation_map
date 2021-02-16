@@ -74,18 +74,18 @@ public class MainActivity extends AppCompatActivity {
         setTitle("건물명을 입력하시오.");
 
         actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFA4614")));      //액션바 색상
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFED3B00")));      //액션바 색상
 
-        if (Build.VERSION.SDK_INT >= 21) {                                                                     //상태바 색상
-            window = this.getWindow();
-            window.setStatusBarColor(this.getResources().getColor(R.color.firefighter_color));
+        if(Build.VERSION.SDK_INT>=21){                                                                     //상태바 색상
+            window=this.getWindow();
+            window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
         }
 
         recview = (RecyclerView) findViewById(R.id.recyclerView);                                            //DB 리싸이클러뷰
         recview.setLayoutManager(new LinearLayoutManager(this));
         imageview2 = (ImageView) findViewById(R.id.imageView2);
 
-        FirebaseRecyclerOptions<User> options =                                                     //검색 알고리즘_1
+        FirebaseRecyclerOptions<User> options =
                 new FirebaseRecyclerOptions.Builder<User>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("User"), User.class)
                         .build();
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 return true;
-            }
+    }
         });
 
         adapter.setOnItemclicklistener(new CustomAdapter.OnPersonItemClickListener() {    //카드뷰 클릭 시 작동.
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {                                                 ////검색 알고리즘_2
+    public boolean onCreateOptionsMenu(Menu menu) {                                                 //검색옵션 기능
         getMenuInflater().inflate(R.menu.example_menu, menu);
 
         MenuItem item = menu.findItem(R.id.search);
@@ -185,16 +185,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         return super.onCreateOptionsMenu(menu);
     }
-
-    private void processsearch(String s)                                                        //검색 알고리즘_3
-    {
-        FirebaseRecyclerOptions<User> options =
-                new FirebaseRecyclerOptions.Builder<User>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("User").orderByChild("st_name").startAt(s).endAt(s + "\uf8ff"), User.class)
-                        .build();
+        private void processsearch(String s)                                                        //검색 기능 구현
+        {
+            FirebaseRecyclerOptions<User> options =
+                    new FirebaseRecyclerOptions.Builder<User>()
+                            .setQuery(FirebaseDatabase.getInstance().getReference().child("User").orderByChild("stname").startAt(s).endAt(s+"\uf8ff"), User.class)
+                            .build();
 
         adapter = new CustomAdapter(options);
         adapter.startListening();
@@ -208,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
 
     public void Zone1() {
         Intent intent = new Intent(this, Zone1.class);

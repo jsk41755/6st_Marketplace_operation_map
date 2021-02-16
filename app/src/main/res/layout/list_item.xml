@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -21,45 +19,40 @@
             android:layout_marginLeft="5dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="건물 번호 : "
-                android:textColor="#000000" />
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="건물 번호 : "
+            android:textColor="#000000" />
 
-            <TextView
-                android:id="@+id/tv_st_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="상호 : "
-                android:textColor="#000000" />
+        <TextView
+            android:id="@+id/tv_stname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="상호 : "
+            android:textColor="#000000" />
 
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="주소 : "
-                android:textColor="#000000" />
+        <TextView
+            android:id="@+id/tv_adress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="주소 : "
+            android:textColor="#000000" />
 
-            <TextView
-                android:id="@+id/tv_floor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="층수 : "
-                android:textColor="#000000" />
+        <TextView
+            android:id="@+id/tv_floor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="층수 : "
+            android:textColor="#000000" />
 
-            <TextView
-                android:id="@+id/tv_st_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="업종 : "
-                android:textColor="#000000" />
+        <TextView
+            android:id="@+id/tv_store"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="업종 : "
+            android:textColor="#000000" />
 
 
         </LinearLayout>
