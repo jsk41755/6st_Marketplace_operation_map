@@ -17,6 +17,7 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -68,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<User> arrayList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-
+    private int middleX, middleY;      //이미지의 중심 좌표
+    private FrameLayout frameLayout;
     //ItemTouchHelper helper;
 
     //private List<ExampleItem> exampleList;
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         Window window;
 
         super.onCreate(savedInstanceState);
@@ -190,16 +193,12 @@ public class MainActivity extends AppCompatActivity {
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     // 뷰에서 손을 뗌
 
-                    if (view.getX() < 0) {
+                    if (motionEvent.getRawX() > 0) {
                         view.setX(0);
-                    } else if ((view.getX() + view.getWidth()) > parentWidth) {
-                        view.setX(parentWidth - view.getWidth());
                     }
 
-                    if (view.getY() < 0) {
+                    if (motionEvent.getRawY() > 0) {
                         view.setY(0);
-                    } else if ((view.getY() + view.getHeight()) > parentHeight) {
-                        view.setY(parentHeight - view.getHeight());
                     }
                 }
                 return true;
@@ -210,12 +209,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 User user = adapter.getItem(position);
+                String searchId = user.getId();           //그 건물의 좌표를 받는다. 당장은 관련 변수가 없음.
+                //String searchId = user.getpos();       //좌표를 db에 저장했으면 이런 방식으로 바꿀듯.
                 Toast.makeText(getApplicationContext(), user.getId() + "가 선택됨", Toast.LENGTH_SHORT).show();
+                imageview2.setX(300);
+                imageview2.setY(middleY);
             }
         });
 
 
     }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasfocus){          //레이아웃의 중간 좌표를 구하기 위해서 호출하는 메소드.
+        super.onWindowFocusChanged(hasfocus);
+        middleX = (imageview2.getWidth()/2);
+        middleY = (imageview2.getHeight()/2);
+    }
+
 
 
     @Override
