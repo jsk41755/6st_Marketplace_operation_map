@@ -1,11 +1,13 @@
 package com.example.testtest;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,12 +24,12 @@ import android.widget.RadioGroup;
 import android.widget.SearchView;
 
 import android.view.Menu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +46,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH;
+
 public class MainActivity extends AppCompatActivity {
     public Button btn_Zone1;
     public Button btn_Zone2;
@@ -57,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recview;
     CustomAdapter adapter;
 
-    public EditText mSearchField; //검색창
-    public ImageButton mSearchBtn; //검색버튼
+    private EditText mSearchField; //검색창
+    private ImageButton mSearchBtn; //검색버튼
 
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<User> arrayList;
@@ -77,14 +81,21 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("건물명을 입력하시오.");
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //화면 회전 이동 세로 고정
+
+        //setTitle("건물명을 입력하시오.");
+
+        mSearchField = (EditText) findViewById(R.id.mSearchField); // 검색창
+        mSearchBtn = (ImageButton) findViewById(R.id.mSearchBtn); //검색버튼
 
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFA4614")));      //액션바 색상
 
-        //ActionBar actionBar = getSupportActionBar();
-        // actionBar.hide();
-        str_result = getString(R.string.st_name);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();                              //액션바 숨김
+
+        str_result = getString(R.string.st_name); //라디오 버튼 값
 
         rg = findViewById(R.id.rg);
         rb_stname = findViewById(R.id.rb_stname);
@@ -96,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                if (checkedId == R.id.rb_stname) {
-                    Toast.makeText(MainActivity.this, "남자 라디오 버튼", Toast.LENGTH_SHORT).show();
+                if(checkedId == R.id.rb_stname){
+                    Toast.makeText(MainActivity.this,"상호명",Toast.LENGTH_SHORT).show();
                     str_result = getString(R.string.st_name);
-                } else if (checkedId == R.id.rb_address) {
-                    Toast.makeText(MainActivity.this, "여자 라디오 버튼", Toast.LENGTH_SHORT).show();
+                } else if(checkedId == R.id.rb_address){
+                    Toast.makeText(MainActivity.this,"주소값",Toast.LENGTH_SHORT).show();
                     str_result = getString(R.string.address);
                 }
             }
@@ -122,6 +133,33 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new CustomAdapter(options);
         recview.setAdapter(adapter);
+
+        mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {      //검색창에서 키보드에서 검색을 눌렀을 때도 검색이 되게 만들음.
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                switch (actionId)
+                {
+                    case IME_ACTION_SEARCH :
+                        String searchText = mSearchField.getText().toString();
+
+                        processsearch(searchText);
+                        break;
+                }
+                return true;
+            }
+        });
+
+        mSearchBtn.setOnClickListener(new View.OnClickListener() {                          //검색창 옆에있는 버튼을 눌렀을 때 검색이 되게 만들음.
+            @Override
+            public void onClick(View view) {
+
+                String searchText = mSearchField.getText().toString();
+
+                processsearch(searchText);
+
+            }
+        });
 
         //    helper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
         //    helper.attachToRecyclerView(recview);                                                    //recyclerview에  itemtouchhelper 붙임 스와이프
@@ -215,10 +253,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void processsearch(String s)                                                        //검색 기능 구현
+    private void processsearch(String s)                                                        //검색 알고리즘_3
     {
         FirebaseRecyclerOptions<User> options =
                 new FirebaseRecyclerOptions.Builder<User>()
@@ -237,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
     public void Zone1() {
         Intent intent = new Intent(this, Zone1.class);
