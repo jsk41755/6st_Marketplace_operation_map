@@ -1,6 +1,7 @@
 package com.example.testtest;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -80,17 +81,21 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("건물명을 입력하시오.");
 
-        mSearchField = (EditText) findViewById(R.id.mSearchField);
-        mSearchBtn = (ImageButton) findViewById(R.id.mSearchBtn);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //화면 회전 이동 세로 고정
+
+        //setTitle("건물명을 입력하시오.");
+
+        mSearchField = (EditText) findViewById(R.id.mSearchField); // 검색창
+        mSearchBtn = (ImageButton) findViewById(R.id.mSearchBtn); //검색버튼
 
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFA4614")));      //액션바 색상
 
         ActionBar actionBar = getSupportActionBar();
-         actionBar.hide();
-        str_result = getString(R.string.st_name);
+         actionBar.hide();                              //액션바 숨김
+
+        str_result = getString(R.string.st_name); //라디오 버튼 값
 
         rg = findViewById(R.id.rg);
         rb_stname = findViewById(R.id.rb_stname);
@@ -129,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CustomAdapter(options);
         recview.setAdapter(adapter);
 
-        mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {      //검색창에서 키보드에서 검색을 눌렀을 때도 검색이 되게 만들음.
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
@@ -145,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mSearchBtn.setOnClickListener(new View.OnClickListener() {
+        mSearchBtn.setOnClickListener(new View.OnClickListener() {                          //검색창 옆에있는 버튼을 눌렀을 때 검색이 되게 만들음.
             @Override
             public void onClick(View view) {
 
@@ -261,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new CustomAdapter(options);
         adapter.startListening();
+
         recview.setAdapter(adapter);
         adapter.setOnItemclicklistener(new CustomAdapter.OnPersonItemClickListener() {    //카드뷰 클릭 시 작동.
             @Override

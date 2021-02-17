@@ -15,7 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="5dp">
 
         <EditText
             android:id="@+id/mSearchField"
@@ -118,6 +119,7 @@
                     android:layout_marginEnd="300dp"
                     android:layout_marginRight="1dp"
                     android:layout_marginBottom="20dp"
+                    android:background="#FFFFFF"
                     android:drawableLeft="@drawable/fireplug"
                     android:fontFamily="sans-serif-black"
                     android:text=" : 소화전"
