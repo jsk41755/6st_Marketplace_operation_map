@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                     case IME_ACTION_SEARCH :
                         String searchText = mSearchField.getText().toString();
 
-                        processsearch(searchText);
+                        ProcessSearch(searchText);
                         break;
                 }
                 return true;
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String searchText = mSearchField.getText().toString();
 
-                processsearch(searchText);
+                ProcessSearch(searchText);
 
             }
         });
@@ -242,13 +242,13 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                processsearch(s);
+                ProcessSearch(s);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                processsearch(s);
+                ProcessSearch(s);
                 return false;
             }
         });
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void processsearch(String s)                                                        //검색 알고리즘_3
+    private void ProcessSearch(String s)                                                        //검색 알고리즘_3
     {
         FirebaseRecyclerOptions<User> options =
                 new FirebaseRecyclerOptions.Builder<User>()
